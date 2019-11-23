@@ -1,15 +1,22 @@
 import React from 'react'
+import {Paper, Tabs, Tab} from '@material-ui/core';
+
 
 const Footer = () => {
-  return(
-    <div className="App">
-    <header className="App-header">
-      <div>
-        Footer
-      </div>
-    </header>
-  </div>
-  )
+  return (
+    <Paper>
+      <Tabs
+        value={0}
+        indicatorColor="primary"
+        textColor="primary"
+        centered
+      >
+        <Tab label="Item One" />
+        <Tab label="Item Two" />
+        <Tab label="Item Three" />
+      </Tabs>
+    </Paper>
+  );
 }
 
 export default Footer
