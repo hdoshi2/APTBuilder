@@ -5,13 +5,14 @@ import Exercises from './Exercises'
 import {exercises, muscles} from '../store.js'
 
 class App extends Component {
-  states = {
-    exercises
+  state = {
+    exercises,
+    category: 'Legs'
   }
 
   getExercisesByMuscles(){
     return Object.entries(
-      this.states.exercises.reduce((accum, current) => {
+      this.state.exercises.reduce((accum, current) => {
         const {muscles} = current
 
         accum[muscles] = accum[muscles]
@@ -23,14 +24,28 @@ class App extends Component {
     )
   }
 
+  handleCategorySelected = category => {
+    this.setState({
+      category
+    })
+  }
+
   render() {
     const exercises = this.getExercisesByMuscles();
-    console.log(this.getExercisesByMuscles())
+    const {category} = this.state;
+    console.log(exercises)
     return (
       <Fragment>
         <Header />
-        <Exercises exercises={exercises}/>
-        <Footer muscles={muscles}/>
+        <Exercises
+          category={category}
+          exercises={exercises}
+        />
+        <Footer
+          category={category}
+          muscles={muscles}
+          onSelect={this.handleCategorySelected}
+        />
       </Fragment>
     );
   }

@@ -9,14 +9,26 @@ const styles = {
 }
 
 
-const Footer = ({muscles}) => {
+const Footer = ({muscles, onSelect, category}) => {
+
+  const index = category
+    ? muscles.findIndex(group => group === category) + 1
+    : 0
+
+  const onIndexSelect = (e, index) => {
+    return(
+      onSelect(index === 0 ? '' : muscles[index - 1])
+    )
+  }
+
   return (
     <Paper>
       <Fragment>
         <Tabs
-          value={0}
+          value={index}
           indicatorColor="primary"
           textColor="primary"
+          onChange={onIndexSelect}
           centered
           // variant="scrollable"
           // scrollButtons="auto"
