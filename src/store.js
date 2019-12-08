@@ -22,7 +22,7 @@ export const exercises = [
     muscles: 'Arms'
   },
   {
-    'id': 'bench-press',
+    id: 'bench-press',
     title: 'Bench Press',
     description: 'Chest exercise...',
     muscles: 'Chest'

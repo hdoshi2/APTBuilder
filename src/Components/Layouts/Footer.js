@@ -36,7 +36,7 @@ const Footer = ({muscles, onSelect, category}) => {
         <Tab label="All" />
           {muscles.map((e) => {
             return(
-              <Tab key={e.id} label={e}/>
+              <Tab key={e} label={e}/>
             )
           })}
         </Tabs>

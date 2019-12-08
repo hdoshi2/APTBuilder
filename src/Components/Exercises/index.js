@@ -20,7 +20,11 @@ const Exercises = ({
   exercises,
   category,
   onSelect,
-  exercise: {id, title, description}
+  exercise: {
+    id,
+    title = "Welcome!",
+    description = "Please select an exercise from the list on the left."
+  }
   }) =>
   {
   return(
@@ -30,9 +34,9 @@ const Exercises = ({
 
       <Grid item sm style={styles.Grid}>
         <Paper style={styles.Paper}>
-          {exercises.map(([group, exercises]) => (
+          {exercises.map(([group, exercises], id) => (
             !category || category === group
-            ?<Fragment>
+            ? <Fragment key={id}>
                 <Typography
                   variant = "h6"
                   style={{textTransform: 'capitalize'}}
@@ -41,10 +45,14 @@ const Exercises = ({
                 </Typography>
                 <List>
                   {exercises.map(({id, title}) => (
-                    <ListItem button key={id}>
+                    <ListItem
+                      key={id}
+                      button
+                      onClick={() => onSelect(id)}
+                    >
                       <ListItemText
+                        key={id}
                         primary={title}
-                        onClick={() => onSelect(id)}
                       />
                     </ListItem>
                   ))}
@@ -62,10 +70,10 @@ const Exercises = ({
       <Grid item sm style={styles.Grid}>
         <Paper style={styles.Paper}>
           <Typography variant="h6">
-            Welcome!
+            {title}
           </Typography>
           <Typography variant="subtitle1">
-            Please select an exercise from the list on the left.
+            {description}
           </Typography>
         </Paper>
       </Grid>
