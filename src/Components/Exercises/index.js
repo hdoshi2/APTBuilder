@@ -16,7 +16,13 @@ const styles = {
   }
 }
 
-const Exercises = ({exercises, category}) => {
+const Exercises = ({
+  exercises,
+  category,
+  onSelect,
+  exercise: {id, title, description}
+  }) =>
+  {
   return(
     <Grid container>
 
@@ -36,7 +42,10 @@ const Exercises = ({exercises, category}) => {
                 <List>
                   {exercises.map(({id, title}) => (
                     <ListItem button key={id}>
-                      <ListItemText primary={title} />
+                      <ListItemText
+                        primary={title}
+                        onClick={() => onSelect(id)}
+                      />
                     </ListItem>
                   ))}
                 </List>
