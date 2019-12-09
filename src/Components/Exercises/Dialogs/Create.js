@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   Button,
   TextField,
@@ -6,35 +6,62 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle
-} from '@material-ui/core/Button';
+  DialogTitle,
+  Fab
+} from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
 
 
-export default props =>
-<>
-  <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-  <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
-  <DialogContent>
-    <DialogContentText>
-      To subscribe to this website, please enter your email address here. We will send updates
-      occasionally.
-    </DialogContentText>
-    <TextField
-      autoFocus
-      margin="dense"
-      id="name"
-      label="Email Address"
-      type="email"
-      fullWidth
-    />
-  </DialogContent>
-  <DialogActions>
-    <Button onClick={handleClose} color="primary">
-      Cancel
-    </Button>
-    <Button onClick={handleClose} color="primary">
-      Subscribe
-    </Button>
-  </DialogActions>
-  </Dialog>
-</>
+export default class Create extends Component {
+
+  state = {
+    open: false
+  }
+
+  handleToggle = () => {
+    this.setState({
+      open: !this.state.open
+    })
+  }
+
+
+  render() {
+    const { open } = this.state;
+
+    return (
+      <>
+        <Button size="small" color="secondary" aria-label="add" onClick={this.handleToggle} style={{maxWidth: '30px'}}>
+          <Fab color="primary" aria-label="add">
+            <AddIcon />
+          </Fab>
+        </Button>
+        
+        <Dialog
+          open={open}
+          aria-labelledby="form-dialog-title"
+          onClose={this.handleToggle}
+        >
+          <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Please fill out the form below.
+            </DialogContentText>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="Email Address"
+              type="email"
+              fullWidth
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button color="primary" variant="contained">
+              Create
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </>
+    )
+  }
+}
