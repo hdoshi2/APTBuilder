@@ -4,6 +4,7 @@ import Create from '../Exercises/Dialogs/Create'
 
 class Header extends Component{
   render() {
+    const {muscles, onExerciseCreate} = this.props
     return (
       <AppBar position="static">
         <Toolbar>
@@ -12,7 +13,10 @@ class Header extends Component{
           <Typography variant="h6" color="inherit" style={{flex: 1}}>
             News
           </Typography>
-          <Create/>
+          <Create
+            muscles={muscles}
+            onCreate={onExerciseCreate}
+          />
         </Toolbar>
       </AppBar>
     )

@@ -7,15 +7,34 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Fab
+  Fab,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
+import { withStyles } from '@material-ui/core/styles';
 
 
-export default class Create extends Component {
+const styles = theme => ({
+  formControl: {
+    // margin: theme.spacing(1),
+    // minWidth: 120,
+    width: 300
+  }
+})
+
+
+class Create extends Component {
 
   state = {
-    open: false
+    open: false,
+    exerciseForm: {
+      title: "",
+      description: "",
+      muscles: ""
+    }
   }
 
   handleToggle = () => {
@@ -24,13 +43,45 @@ export default class Create extends Component {
     })
   }
 
+  handleChange = name => ({ target: { value } }) => {
+    this.setState({
+      exerciseForm: {
+        ...this.state.exerciseForm,
+        [name]: value
+      }
+    })
+  }
+
+  handleSubmit = () => {
+
+    const { exerciseForm } = this.state
+    console.log(exerciseForm)
+    this.props.onCreate({
+      ...exerciseForm,
+      id: exerciseForm.title.toLocaleLowerCase(/ /g, '-')
+    })
+
+    this.setState({
+      open: false,
+      exerciseForm: {
+        title: "",
+        description: "",
+        muscles: ""
+      }
+    })
+  }
+
 
   render() {
-    const { open } = this.state;
-
+    const { open, exerciseForm: { title, description, muscles } } = this.state;
+    const { classes, muscles: categories } = this.props;
     return (
       <>
-        <Button aria-label="add" onClick={this.handleToggle} style={{maxWidth: '30px'}}>
+        <Button
+          aria-label="add"
+          onClick={this.handleToggle}
+          style={{ maxWidth: '30px' }}
+        >
           <Fab color="secondary" aria-label="add" size="small">
             <AddIcon />
           </Fab>
@@ -41,22 +92,56 @@ export default class Create extends Component {
           aria-labelledby="form-dialog-title"
           onClose={this.handleToggle}
         >
-          <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+          <DialogTitle id="form-dialog-title">
+            Subscribe
+          </DialogTitle>
           <DialogContent>
             <DialogContentText>
               Please fill out the form below.
             </DialogContentText>
             <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              label="Email Address"
-              type="email"
-              fullWidth
+              label="Title"
+              value={title}
+              onChange={this.handleChange('title')}
+              margin="normal"
+              className={classes.formControl}
+            />
+            <br />
+            <FormControl className={classes.formControl}>
+              <InputLabel htmlFor="muscles">
+                Muscles
+            </InputLabel>
+              <Select
+                native
+                value={muscles}
+                onChange={this.handleChange('muscles')}
+              >
+                <option value={""}>
+                </option>
+                {categories.map((category, id) => (
+                  <option value={category} key={id}>
+                    {category}
+                  </option>
+                ))}
+              </Select>
+            </FormControl>
+            <br />
+            <TextField
+              label="Description"
+              multiline
+              value={description}
+              onChange={this.handleChange('description')}
+              margin="normal"
+              rowsMax="4"
+              className={classes.formControl}
             />
           </DialogContent>
           <DialogActions>
-            <Button color="primary" variant="contained">
+            <Button
+              color="primary"
+              variant="contained"
+              onClick={this.handleSubmit}
+            >
               Create
             </Button>
           </DialogActions>
@@ -65,3 +150,5 @@ export default class Create extends Component {
     )
   }
 }
+
+export default withStyles(styles)(Create)
