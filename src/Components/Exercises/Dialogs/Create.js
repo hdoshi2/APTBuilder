@@ -30,12 +30,12 @@ export default class Create extends Component {
 
     return (
       <>
-        <Button size="small" color="secondary" aria-label="add" onClick={this.handleToggle} style={{maxWidth: '30px'}}>
-          <Fab color="primary" aria-label="add">
+        <Button aria-label="add" onClick={this.handleToggle} style={{maxWidth: '30px'}}>
+          <Fab color="secondary" aria-label="add" size="small">
             <AddIcon />
           </Fab>
         </Button>
-        
+
         <Dialog
           open={open}
           aria-labelledby="form-dialog-title"
